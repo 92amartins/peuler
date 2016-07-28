@@ -5,25 +5,27 @@
 
 # d is the number of digits
 def largestPalindrome(d):   # TODO: Treat case d = 0
-    n = 10**(d) - 1;        # Initialize n and m with the highest possible values
-    m = n                   # For d = 2, n = m = 99; for d = 3, n = m = 999, ...
+    n = 10**(d) - 1         # n is the largest d-digit number
     lbound = 10**(d-1) - 1  # lower bound = 99 for d = 3
-    
-    while n > lbound and m > lbound:    # while n and m are 3-digit numbers
-        pal = n*m
-        if(isPalindrome(pal)):
-            return pal
-        elif n > m:
-            n -= 1
-        else:
-            m -= 1
+    pals = []
+    while n > lbound:
+        m = n
+        while m > lbound:   
+            pal = n*m
+            if(isPalindrome(pal)):
+                pals.append(pal)
+                break
+            m -= 1;
+        n -= 1;
+    return max(pals)
+        
 
 # Tells whether n is palindrome or not
 def isPalindrome(n):
     s = str(n)  # Casts n to string
     return s == s[::-1] # Tests whether s is read the same backwards and forwards
 
-# print(largestPalindrome(1)) # Outputs ?
-# print(largestPalindrome(2)) # Outputs 9009
-print(largestPalindrome(3)) # Outputs ????
-# print(largestPalindrome(4)) # Outputs ????
+print(largestPalindrome(1)) # Outputs 9
+print(largestPalindrome(2)) # Outputs 9009
+print(largestPalindrome(3)) # Outputs 906609
+print(largestPalindrome(4)) # Outputs 99000099
